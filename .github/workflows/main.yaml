@@ -1,0 +1,25 @@
+name: Run Telegram Bot
+
+on:
+  push:
+    branches: [ cdlc ]
+  schedule:
+    - cron: '59 */5 * * *'
+    
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+  ALLOWED_TELEGRAM_USERNAMES: ${{ secrets.ALLOWED_TELEGRAM_USERNAMES }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Run bot
+      run: |
+        mv config/config.example.yml config/config.yml
+        mv config/config.example.env config/config.env
+        docker-compose --env-file config/config.env up --build

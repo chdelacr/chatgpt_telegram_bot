@@ -15,6 +15,10 @@ services:
     container_name: chatgpt_telegram_bot
     command: python3 bot/bot.py
     restart: always
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN}
+      ALLOWED_TELEGRAM_USERNAMES: ${ALLOWED_TELEGRAM_USERNAMES}
     build:
       context: "."
       dockerfile: Dockerfile
